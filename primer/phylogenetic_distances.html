@@ -78,11 +78,11 @@ instance:</p>
 This data source is expected to provide a table where each row is a separate line and each column is separated from the preceding by a token (typically a comma or a tab character).
 The cells of the table are numeric (typically real) values that indicate the
 distance between the taxa of the current row and column. Note that <em>only</em> the
-upper right section of the table is considered. The diagonals values are
+upper right section of the table is considered. The diagonal values are
 typically zeroes and, in either case, ignored along with the lower diagonal.
 Despite being ignored by the PhylogeneticDistanceMatrix object, the values are
 parsed by the underlying reader and thus have to be valid numerical values.</p>
-<p>For example,  the data from Table 1 of Saitou and Nei (1987) can be represented by the following comma-separated value (CSV) file:</p>
+<p>For example, the data from Table 1 of Saitou and Nei (1987) can be represented by the following comma-separated value (CSV) file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">h</span>
 <span class="n">a</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">17</span>
 <span class="n">b</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">14</span>
@@ -107,6 +107,35 @@ parsed by the underlying reader and thus have to be valid numerical values.</p>
 <span class="n">pdm1</span> <span class="o">=</span> <span class="n">dendropy</span><span class="o">.</span><span class="n">PhylogeneticDistanceMatrix</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span>
         <span class="n">src</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.tsv&quot;</span><span class="p">),</span>
         <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To load data from a NumPy array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">dendropy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">17</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">14</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">16</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">13</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">17</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">taxon_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">taxon_names</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">taxon_names</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">buffer</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">index_label</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">pdm1</span> <span class="o">=</span> <span class="n">dendropy</span><span class="o">.</span><span class="n">PhylogeneticDistanceMatrix</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span>
+        <span class="n">src</span><span class="o">=</span><span class="n">buffer</span><span class="p">,</span>
+        <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>In the above examples, the taxon namespace into which the data was read was a new one, created by default.
@@ -724,7 +753,7 @@ The result <code class="docutils literal notranslate"><span class="pre">namedtup
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2009-2024, Jeet Sukumaran and Mark T. Holder.
+    &#169; Copyright 2009-2025, Jeet Sukumaran and Mark T. Holder.
     </div>
   </body>
 </html>

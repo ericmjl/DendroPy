@@ -5,11 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Newick &#8212; DendroPy 5.0.13 documentation</title>
+    <title>Newick &#8212; DendroPy 5.1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/rtd.css?v=cedc6a2f" />
     
-    <script src="../_static/documentation_options.js?v=101fa471"></script>
+    <script src="../_static/documentation_options.js?v=bfa18cfb"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="fasta.html" title="FASTA"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">DendroPy 5.0.13 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">DendroPy 5.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">DendroPy Schemas: Phylogenetic and Evolutionary Biology Data Formats</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Newick</a></li> 
       </ul>
@@ -123,14 +123,19 @@ interpreted as branch lengths will be cast to this type.
 Defaults to <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p></li>
 <li><p><strong>suppress_edge_lengths</strong> (boolean, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, edge length values will not be processed. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 edge length values will be processed.</p></li>
-<li><p><strong>extract_comment_metadata</strong> (boolean, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default), any comments that begin with ‘&amp;’ or ‘&amp;&amp;’ will
+<li><p><strong>extract_comment_metadata</strong> (boolean or callable, default: <code class="docutils literal notranslate"><span class="pre">True</span></code>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> (default), any comments that begin with ‘&amp;’ or ‘&amp;&amp;’ will
 be parsed and stored as part of the annotation set of the
 corresponding object (accessible through the <code class="docutils literal notranslate"><span class="pre">annotations</span></code>
-attribute of the object). This requires that the comment
-contents conform to a particular format (NHX or BEAST: ‘field =
-value’). If <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the comments will not be parsed,
-but will be instead stored directly as elements of the <code class="docutils literal notranslate"><span class="pre">comments</span></code>
-list attribute of the associated object.</p></li>
+attribute of the object), using
+<code class="xref py py-func docutils literal notranslate"><span class="pre">dendropy.dataio.nexusprocessing.parse_comment_metadata_dendropy_v5_0_0</span></code>
+(see its docstring for the comment format and known
+limitations). If <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the comments will not be
+parsed, but will be instead stored directly as elements of
+the <code class="docutils literal notranslate"><span class="pre">comments</span></code> list attribute of the associated object.
+A callable may be given instead: it will be called with a
+single comment token string and must return an iterable of
+(field name, value) pairs, which is then converted into
+<a class="reference internal" href="../library/basemodel.html#dendropy.datamodel.basemodel.Annotation" title="dendropy.datamodel.basemodel.Annotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotation</span></code></a> objects.</p></li>
 <li><p><strong>store_tree_weights</strong> (boolean, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, process the tree weight (e.g. “[&amp;W 1/2]”) comment
 associated with each tree, if any. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 <li><p><strong>finish_node_fn</strong> (function object, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – If specified, this function will be applied to each node after
@@ -163,6 +168,10 @@ arguments will result in an error.</p></li>
 </ul>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">dendropy.dataio.nexusprocessing.parse_comment_metadata_dendropy_v5_0_0</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">dendropy.dataio.nexusprocessing.parse_comment_metadata_beast2_v2_7_8</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">dendropy.dataio.nexusprocessing.parse_comment_metadata_beast2_v2_7_8_nesting</span></code></p>
+</div>
 </dd></dl>
 
 </section>
@@ -727,7 +736,7 @@ labels or the node labels.</p>
         <h3>Obtaining</h3>
         <ul>
             <li><a target="_blank" href="http://pypi.python.org/pypi/DendroPy">Install from the Python Package Index</a></li>
-            <li><a target="_blank" href="http://pypi.python.org/packages/source/D/DendroPy/DendroPy-5.0.13.tar.gz">Download the Source Code Archive</a></li>
+            <li><a target="_blank" href="http://pypi.python.org/packages/source/D/DendroPy/DendroPy-5.1.0.tar.gz">Download the Source Code Archive</a></li>
             <li><a target="_blank" href="http://github.com/jeetsukumaran/DendroPy">Clone the Source Code Repository</a></li>
         </ul>
     </div>
@@ -791,7 +800,7 @@ labels or the node labels.</p>
         <li class="right" >
           <a href="fasta.html" title="FASTA"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">DendroPy 5.0.13 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">DendroPy 5.1.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >DendroPy Schemas: Phylogenetic and Evolutionary Biology Data Formats</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Newick</a></li> 
       </ul>
